@@ -33,10 +33,10 @@ $settings['error'] = [
 // Database settings
 $settings['db'] = [
     'driver' => 'mysql',
-    'host' => 'localhost',
-    'username' => 'root',
-    'database' => 'hostel',
-    'password' => '',
+    'host' => 'freedb.tech',
+    'username' => 'freedbtech_hosteladmin',
+    'database' => 'freedbtech_hostel',
+    'password' => 'hosteladmin',
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     'options' => [

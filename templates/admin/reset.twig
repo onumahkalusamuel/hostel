@@ -1,0 +1,13 @@
+{% extends 'layout.twig' %}
+{% block title %} Welcome {% endblock %}
+{% block content %}
+<section>
+    <h3>Reset</h3>
+    <form action="{{get_uri()}}" method="POST">
+      Clicking on this button will reset all the hostel allocations. Please make sure you are aware of the implications. No record of students' hostel allotment will exist. Continue? 
+      <button type="submit" class="primary">Yes, continue</bu
+tton>
+    </form>
+</section>
+
+{% endblock %}

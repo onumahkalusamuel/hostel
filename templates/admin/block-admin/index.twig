@@ -1,0 +1,65 @@
+{% extends 'layout.twig' %}
+{% block title %}Block Admin{% endblock %}
+{% block content %}
+
+{% if get('block_id') == '' %}
+
+<section>
+    <h5>Please start by <a href="{{url_for('a-hostel')}}" style="text-decoration:underline">SELECTING HOSTEL</a></h5>
+</section>
+
+{% else %}
+
+<section>
+    <h3>Hostel</h3>
+    <input value="{{hostelName}}" readonly />
+    <h3>Block</h3>
+    <input value="{{blockName}}" readonly />
+</section>
+
+<section>
+    <h3>Add Block Admin</h3>
+    <form action="{{get_uri()}}" method="POST">
+      <input name="block_id" value="{{get('block_id')}}" hidden />
+      <input name="name" placeholder="Admin Name" required>
+      <input name="position" placeholder="Position" required/>
+      <input name="phone" placeholder="Phone Number" type=""number />
+      <select name="show_to_student" required>
+	<option value="">--Select Visibilty--</option>
+	<option value="1">Show to students</option>
+	<option value="2">Don't show to students</option>
+      </select>
+      <button type="submit" class="primary">Submit</bu
+tton>
+    </form>
+</section>
+
+<section>
+  <h3>Admins List </h3>
+  <table>
+    <tr>
+      <th>S/N</th><th>ADMIN NAME</th><th>ACTIONS</th></tr>
+      {% for ba in blockAdmin %}
+        <tr>
+	  <td>{{loop.index}}.</td>
+	  <td>
+	    {{ba.name}}<br/>
+	    ({{ ba.position }})
+	  </td>
+	  <td>
+	    <form action="{{url_for('a-delete-block-admin', {id: ba.id})}}" onsubmit="return confirm('Are you sure you want to delete this record?')">
+                <button class="danger">delete</button>
+		<input name="block_id" value="{{get('block_id')}}" hidden />
+            </form>
+	  </td>
+	</tr>
+      {% else %}
+        <tr><td colspan="4">No records found</td></tr>
+      {% endfor %}
+    </tr>
+  </table>
+</section>
+
+{% endif %}
+
+{% endblock %}

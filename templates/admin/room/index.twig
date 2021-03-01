@@ -1,0 +1,49 @@
+{% extends 'layout.twig' %}
+{% block title %}Rooms{% endblock %}
+{% block content %}
+
+{% if get('block_id') == '' %}
+
+<section>
+    <h5>Please start by <a href="{{url_for('a-hostel')}}">Selecting Hostel</a> or <a href="{{url_for('a-block')}}">Blocks</a> <button></h5>
+</section>
+
+{% else %}
+
+<section>
+    <h3>Hostel</h3>
+    <input value="{{hostelName}}" readonly />
+    <h3>Block</h3>
+    <input value="{{blockName}}" readonly />
+</section>
+
+<section>
+  <h3>Rooms List </h3>
+  <p> This is a list of rooms available in this block. Click on <strong>view</strong> to see the full details of the room and the occupants.</p>
+  <table>
+    <tr>
+      <th>S/N</th><th>ROOM NAME</th><th>USAGE</th><th>ACTIONS</th></tr>
+      {% for r in room %}
+        <tr>
+	  <td>{{loop.index}}.</td>
+	  <td>
+	    {{r.name}}<br/>
+	    {% if r.reserved %} <mark>RESERVED</mark> {% endif %}
+	  </td>
+	  <td>{{r.used|price}} of {{r.total|price}}</td>
+	  <td>
+	    <form action="{{url_for('a-view-room', {id: r.id})}}">
+                <button class="success">view</button>
+            </form>
+	  </td>
+	</tr>
+      {% else %}
+        <tr><td colspan="3">No records found</td></tr>
+      {% endfor %}
+    </tr>
+  </table>
+</section>
+
+{% endif %}
+
+{% endblock %}

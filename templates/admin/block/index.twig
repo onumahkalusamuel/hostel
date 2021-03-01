@@ -1,0 +1,61 @@
+{% extends 'layout.twig' %}
+{% block title %}Hostels{% endblock %}
+{% block content %}
+
+{% if get('hostel_id') == '' %}
+
+<section>
+    <h3>Hostel Select</h3>
+    <form action="{{get_uri()}}">
+      <select name="hostel_id">
+	<option value="">--Select Hostel--</option>
+	{% for h in hostel %}
+	<option value="{{h.id}}">{{h.name}}</option>
+	{% endfor %}
+      </select>
+      <button type="submit" class="primary">Load Blocks</button>
+    </form>
+</section>
+
+{% else %}
+
+<section>
+    <h3>Hostel</h3>
+    <input value="{{hostelName}}" readonly />
+
+</section>
+
+<section>
+  <h3>Blocks List </h3>
+  <p>You can add the list of staff that control each block under the <strong>admins</strong> link. This may include the porter, cleaners, gatekeepers, security, etc. Click on <strong>rooms</strong> to view the rooms in a block.</p>
+  <table>
+    <tr>
+      <th>S/N</th><th>BLOCK NAME</th><th>ACTIONS</th></tr>
+      {% for b in block %}
+        <tr>
+	  <td>{{loop.index}}.</td>
+	  <td>
+	    {{b.name}} ({{b.total_rooms}} rooms)<br/>
+	    {% if b.reserved %} <mark>RESERVED</mark> {% endif %}
+	  </td>
+	  <td>
+	    <form action="{{url_for('a-room')}}">
+                <input name="block_id" value="{{b.id}}" hidden />
+                <button class="success">rooms</button>
+            </form>
+            <form action="{{url_for('a-block-admin')}}">
+		<input name="block_id" value="{{b.id}}" hidden />
+                <button class="positive">admins</button>
+            </form>
+	  </td>
+	</tr>
+      {% else %}
+        <tr><td colspan="3">No records found</td></tr>
+      {% endfor %}
+    </tr>
+  </table>
+</section>
+
+{% endif %}
+
+{% endblock %}

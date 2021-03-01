@@ -1,0 +1,38 @@
+{% extends 'layout.twig' %}
+{% block title %}{{roomName}}{% endblock %}
+{% block content %}
+
+<section>
+    <h3>Hostel</h3>
+    <input value="{{hostelName}}" readonly />
+    <h3>Block</h3>
+    <input value="{{blockName}}" readonly />
+    <h3>Room</h3>
+    <input value="{{room.name}}" readonly />
+    <h3>Total Occupants</h3>
+    <input value="{{room.total}}" readonly />
+    <h3>Total Alloted</h3>
+    <input value="{{room.used|price}}" readonly />
+</section>
+
+<section>
+  <h3>Occupants List </h3>
+  <table>
+    <tr>
+      <th>S/N</th><th>STUDENT NAME</th></tr>
+      {% for s in student %}
+        <tr>
+	  <td>{{loop.index}}.</td>
+	  <td>
+	    {{s.name}}<br/>
+	    ({{s.admission_no}}) / Level: {{s.level}}
+	  </td>
+	</tr>
+      {% else %}
+        <tr><td colspan="3">No records found</td></tr>
+      {% endfor %}
+    </tr>
+  </table>
+</section>
+
+{% endblock %}

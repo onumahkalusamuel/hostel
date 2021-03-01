@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+{% block title %}Hostels{% endblock %}
+{% block content %}
+<section>
+    <h3>Add Hostel</h3>
+    <p>You can add a new hostel using this form. Please fill in the form accurately so that the appropriate number of blocks, rooms and bedspaces will be created.</p>
+    <form action="{{get_uri()}}" method="POST">
+      <input name="name" placeholder="Hostel Name">
+      <input name="blocks" placeholder="No. of Blocks" type="number" />
+      <input name="rooms" placeholder="No. of Rooms per Block" type="number" />
+      <input name="occupants" placeholder="No. of Occupants per Room" type="number" />
+      <button type="submit" class="primary">Submit</button>
+    </form>    
+</section>
+<section>
+  <h3>Hostels List </h3>
+  <p>Click on <strong>blocks</strong> to view the hostel blocks. Click on <strong>delete</strong> to delete a hostel, its blocks and rooms.</p>
+  <table>
+    <tr>
+      <th>S/N</th><th>HOSTEL NAME</th><th>ACTIONS</th></tr>
+      {% for h in hostel %}
+        <tr>
+	  <td>{{loop.index}}.</td>
+	  <td>{{h.name}}</td>
+	  <td>
+	    <form action="{{url_for('a-block')}}">
+		<input name="hostel_id" value="{{h.id}}" hidden />
+		<button class="success">blocks</button>
+	    </form>
+	    <form action="{{url_for('a-delete-hostel', {id: h.id})}}" onsubmit="return confirm('Are you sure you want to delete this?');">
+		<button class="danger">delete</button>
+	    </form>
+	  </td>
+	</tr>
+      {% else %}
+        <tr><td colspan="3">No records found</td></tr>
+      {% endfor %}
+    </tr>
+  </table>
+</section>
+{% endblock %}

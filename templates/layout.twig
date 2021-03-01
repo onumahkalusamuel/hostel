@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{% block title %}Dashboard{% endblock %} - MOUAU Hostels</title>
+    <link rel="shortcut icon" href="{{base_path()}}/assets/img/logo.jpg"/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="theme-color" content="#fff">
+    <link rel='stylesheet' type='text/css' href='{{base_path()}}/assets/css/main.css?t=<?=time()?>'>
+
+</head>
+<body>
+    <div class="header">
+      <span class="togglemenu" style="float: right">
+      <img src="{{base_path()}}/assets/icons/hamburger.svg" width="12px" /> MENU
+      </span>
+      <span> <img src="{{base_path()}}/assets/img/logo.svg" height="40px" /> </span>
+    </div>
+    <div class="sidebar">
+      <header>
+	Admin Page
+      </header>
+      <ul>
+        <li>
+          <a href="{{url_for('a-dashboard')}}">Dashboard</a>
+        </li>
+        <li>
+          <a href="{{url_for('a-hostel')}}">Hostels</a>
+        </li>
+        <li>
+          <a href="{{url_for('reset')}}">Reset System</a>
+	<li>
+	  <a href="{{url_for('a-logout')}}">Logout</a>
+      </ul>
+    </div>
+
+    <main style="min-height: 75vh">
+        {% for message in flashes('error') %}
+            <div style="padding:10px; margin:15px 0px; background:darkred; color:white">
+                {{message}}
+                <span style="float:right; cursor:pointer;" onclick="this.parentElement.style.display='none'">x</span>
+            </div>
+        {% endfor %}
+        {% for message in flashes('success') %}
+            <div style="padding:10px; margin:15px 0px; background:darkgreen; color:white">
+                {{message}}
+                <span style="float:right; cursor:pointer;" onclick="this.parentElement.style.display='none'">x</span>
+            </div>
+        {% endfor %}
+        {% block content %}
+        {% endblock %}
+    </main>
+<br/><br/>
+<div style="background-color:#333;color:white;line-height:3;text-align:center">&copy; MOUAU Hostels</div>
+</body>
+<script src='{{base_path()}}/assets/js/main.js?t=<?=time()?>'></script>
+</html>

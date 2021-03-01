@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="darkgreen">
+</head>
+<body>
+<style>
+
+body {
+  background: darkgreen;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.login-page {
+  width: 340px;
+  margin: auto;
+  display: inline-block;
+  text-align:center;
+  padding-top: 10%;
+  padding-bottom: 50%;
+}
+.form {
+  background: #FFFFFF;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: darkgreen;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+</style>
+
+<div class="login-page">
+  <div class="form">
+    <img style="max-height:50px" src="{{base_path()}}/public/assets/img/logo.svg" alt="logo"/>
+    <br/>
+    <h3 style="color:darkgreen; text-decoration: underline">Student Login</h3>
+    {% for message in flashes('error') %}
+        <div style="padding:10px; background:darkred; color:white">
+            {{message}}
+            <span style="float:right; cursor:pointer;" onclick="this.parentElement.style.display='none'">x</span>
+        </div>
+        <br/><br/>
+    {% endfor %}
+    <form method="POST" action="{{url_for('student-login')}}" class="login-form">
+      <input type="text" name="username" placeholder="username" required />
+      <input type="password" name="password" placeholder="password" required />
+      <button>Login</button>
+    </form>
+  </div>
+  <a href="{{url_for('home')}}" style="color: white; margin-top: 40px; display: block">Go back</a>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+{% extends 'student-layout.twig' %}
+{% block title %} Apply {% endblock %}
+{% block content %}
+
+{% if allotted %}
+<h3>Allotment Details</h3>
+<section>
+<p>You have been allotted a room. Please find the details below.</p>
+<button class="hostel">
+<h4>HOSTEL</h4>
+{{allotted_details.hostel}}
+<h4>BLOCK</h4>
+{{allotted_details.block}}
+<h4>ROOM</h4>
+{{allotted_details.room}}
+</button>
+</section>
+{% else %}
+<section>
+    <h3 style="text-align:left">Apply </h3>
+<p>
+Click on a hostel to apply for accommodation. You will be required to provide your payment code to proceed with the processing. <br/>Note: Hostel allocation is based on <strong>first come, first serve.</strong></p>
+<em>Test with any of the following payment codes:<br/> <strong>1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888, 9999</strong></em><br/><br/>
+    {% for h in return %}
+    <form action="{{get_uri()}}" method="POST" onsubmit="return false;">
+      <input name="hostel_id" value="{{h.id}}" hidden/>
+      <button class="hostel hostel_btn" {% if h.count.used >= h.count.total %} disabled {% endif %}>
+      <h2>{{h.name}}</h2>
+      <span>{{h.count.used|price}} used / {{h.count.total|price}} total</span>
+<p>
+      {% if h.count.used < h.count.total %}
+	Click here to apply.
+      {% else %}
+        Hostel already full. Can't apply.
+      {% endif %}
+</p>
+      </button>
+    </form>
+    {% endfor %}
+
+</section>
+
+{% endif %}
+<style>
+section {
+  text-align:center
+}
+
+.hostel {
+  padding: 15px;
+  margin: 5px;
+  background-color: darkgreen;
+  color: white;
+  border-radius:2px;
+  display: inline-block;
+  max-width: 450px;
+}
+</style>
+<script>
+document.querySelectorAll('.hostel_btn').forEach(function(ele){
+  ele.addEventListener('click', function(ctx){
+    var paymentcode = prompt("Enter your payment code for this hostel");
+    var paymentcodes = ['1111','2222','3333','4444','5555','6666','7777','8888','9999'];
+    if(!paymentcodes.includes(paymentcode)) return alert('Invalid payment code');
+
+    this.parentElement.submit();
+  });
+});
+</script>
+{% endblock %}
